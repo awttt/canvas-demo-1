@@ -17,8 +17,23 @@
             // 画线
         var ctx = canvas.getContext("2d");
         ctx.fillStyle = "black";
-        ctx.strokeStyle = 'none'
+        ctx.strokeStyle = 'black'
+        ctx.lineWidth = 8;
+        ctx.lineCap = "round";
+
+        function drawLine(x1, y1, x2, y2) {
+            ctx.beginPath();
+            ctx.moveTo(x1, y1)
+            ctx.lineTo(x2, y2)
+            ctx.stroke();
+        }
+
+
+
+
+
         let painting = false
+        let last
 
 
 
@@ -36,15 +51,14 @@
 
         } else {
 
-            canvas.onmousedown = () => {
+            canvas.onmousedown = (a) => {
                 painting = true
+                last = [a.xlientX, a.clientY]
             }
             canvas.onmousemove = (x) => {
                 if (painting === true) {
-                    ctx.beginPath();
-                    ctx.arc(x.clientX, x.clientY, 10, 0, 2 * Math.PI);
-                    ctx.fill();
-                    ctx.stroke();
+                    drawLine(last[0], last[1], x.clientX, x.clientY)
+                    last = [x.clientX, x.clientY]
                 }
             }
 
